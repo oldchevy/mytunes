@@ -32,4 +32,14 @@ describe('AppView', function() {
     });
   });
 
+  describe('when a song in the queue is clicked', function() {
+    it('removes the song from the queue', function() {
+      var song = app.get('library').at(0);
+      song.enqueue();
+      expect(appView.queueView.collection.at(0)).to.equal(song);
+      $(appView.queueView.el).children().first().next().trigger('click');    
+      expect(appView.queueView.collection.at(0)).to.not.equal(song);
+    });
+  });
+
 });
