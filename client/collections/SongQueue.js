@@ -18,7 +18,18 @@ var SongQueue = Backbone.Collection.extend({
       }
     });
 
-    this.on('dequeue', this.remove);
+    var context = this;
+    //Use context = this to reference the queue
+    //(bind wansn't working for some reason)
+    //Logic triggers playing the next song if the song removed from the queue was the first one
+    this.on('dequeue', function(song) {
+      if (context.at(0) === song) {
+        context.remove(song.cid);
+        context.playFirst();
+      } else {
+        context.remove(song.cid); 
+      }
+    });
   },
 
 

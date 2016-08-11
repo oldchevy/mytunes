@@ -5,6 +5,8 @@ var LibraryView = Backbone.View.extend({
 
   initialize: function() {
     this.render();
+    //Sync event is broadcast when the collection finished updating with the server's results
+    this.collection.on('sync', this.render, this);
 
   },
 
