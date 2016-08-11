@@ -5,19 +5,22 @@ var SongQueue = Backbone.Collection.extend({
 
 
   initialize: function() {
+    this.on('add', function() {
+      if (this.length === 1) {
+        this.playFirst();
+      }
+    });
+
+    this.on('ended', function(song) {
+      this.at(0).dequeue();
+      if (this.at(0)) {
+        this.playFirst();        
+      }
+    });
+
+    this.on('dequeue', this.remove);
   },
 
-  add: function(songModel) {
-    //Pseudocode
-    //check the queue
-      //if it's the only song in the queue, trigger play
-      //If it's not the only song, don't do anything
-    this.push(songModel);
-    songModel.enqueue();
-    if (this.length === 1) {
-      this.playFirst();
-    }
-  },
 
   playFirst: function() {
     this.at(0).play();
