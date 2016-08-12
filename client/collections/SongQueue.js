@@ -25,7 +25,9 @@ var SongQueue = Backbone.Collection.extend({
     this.on('dequeue', function(song) {
       if (context.at(0) === song) {
         context.remove(song.cid);
-        context.playFirst();
+        if (context.length !== 0) {
+          context.playFirst();
+        }
       } else {
         context.remove(song.cid); 
       }
